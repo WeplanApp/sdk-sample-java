@@ -1,4 +1,4 @@
-package sample.cumberland.com.myapplication;
+package com.cumberland.sample.myapplication;
 
 import org.junit.Test;
 
