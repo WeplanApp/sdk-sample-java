@@ -2,6 +2,9 @@ package com.cumberland.sample.myapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
+import com.cumberland.weplansdk.WeplanSdk;
+import com.cumberland.weplansdk.WeplanSdkKt;
 import com.cumberland.weplansdk.domain.permissions.model.WeplanPermission;
 import com.cumberland.weplansdk.domain.permissions.model.WeplanPermissionAskListener;
 import com.cumberland.weplansdk.domain.permissions.usecase.WeplanPermissionChecker;
@@ -18,14 +21,20 @@ public class MainActivity extends AppCompatActivity {
   protected void onResume() {
     super.onResume();
 
-    checkLocationPermission();
+    checkPhonePermission();
+    refreshUserId();
   }
 
-  private void checkLocationPermission() {
+  private void checkPhonePermission() {
     WeplanPermissionChecker.INSTANCE.withActivity(this)
-        .withPermission(WeplanPermission.ACCESS_FINE_LOCATION.INSTANCE)
+        .withPermission(WeplanPermission.READ_PHONE_STATE.INSTANCE)
         .withListener(new PermissionListener())
         .check();
+  }
+
+  private void refreshUserId() {
+    ((TextView)findViewById(R.id.id_text_view))
+        .setText("UserId: " + WeplanSdk.INSTANCE.getUserId(this));
   }
 
   private class PermissionListener implements WeplanPermissionAskListener {
@@ -47,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onPermissionGranted(WeplanPermission weplanPermission) {
-      // TODO
+      refreshUserId();
     }
 
     @Override
