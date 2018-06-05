@@ -94,7 +94,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     public void onPermissionDisabled(WeplanPermission weplanPermission) {
-      requestPermission(weplanPermission);
+      
     }
 
     @Override

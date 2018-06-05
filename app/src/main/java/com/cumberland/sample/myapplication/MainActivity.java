@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onPermissionDisabled(WeplanPermission weplanPermission) {
-      requestPermission(weplanPermission);
+
     }
 
     @Override
