@@ -44,9 +44,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
     WeplanSdk.INSTANCE.withContext(this)
         .withClientId(
-            "fGthbeJ9tru8CDlQUqhKmLXDxwXWzQLxfSjwEeoJ1iWTS9dLNRfIF295LEFwV3dGx53FhY2Oj9m1SDWDoeDhcA")
+            "YOUR_CLIENT_ID")
         .withClientSecret(
-            "Youbgyj54SbfMjMcFSCWjAzSDKk8GzJc2VP7DTqWR8LhuqNhb29rOfDOb9GNS0FUhMFtBiKlNqmXVCjMjk3U8u")
+            "YOUR_CLIENT_SECRET")
         .listening(new WeplanSdkListener())
         .enable();
   }
