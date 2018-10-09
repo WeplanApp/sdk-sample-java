@@ -1,7 +1,9 @@
 package com.cumberland.sample.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 import com.cumberland.weplansdk.WeplanSdk;
 import com.cumberland.weplansdk.WeplanSdkKt;
@@ -15,14 +17,10 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
 
     checkPhonePermission();
-    refreshUserId();
+    showUserId();
+    initDisableButton();
   }
 
   private void checkPhonePermission() {
@@ -32,9 +30,19 @@ public class MainActivity extends AppCompatActivity {
         .check();
   }
 
-  private void refreshUserId() {
-    ((TextView)findViewById(R.id.id_text_view))
-        .setText("UserId: " + WeplanSdk.INSTANCE.getUserId(this));
+  private void showUserId() {
+    ((TextView)findViewById(R.id.id_text_view)).setText("UserId: " + WeplanSdk.INSTANCE.getUserId(this));
+  }
+
+  private void initDisableButton() {
+    findViewById(R.id.disableButton).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        WeplanSdk.INSTANCE.disable(getApplicationContext());
+        startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+        finish();
+      }
+    });
   }
 
   private class PermissionListener implements WeplanPermissionAskListener {
@@ -56,12 +64,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onPermissionGranted(WeplanPermission weplanPermission) {
-      refreshUserId();
+
     }
 
     @Override
     public void onPermissionNotOSCompatible(WeplanPermission weplanPermission) {
-      // TODO
+
     }
 
     private void requestPermission(WeplanPermission weplanPermission) {
