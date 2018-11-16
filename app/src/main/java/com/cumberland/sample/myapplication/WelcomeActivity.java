@@ -1,28 +1,26 @@
 package com.cumberland.sample.myapplication;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.cumberland.weplansdk.WeplanSdk;
 import com.cumberland.weplansdk.WeplanSdkCallback;
-import com.cumberland.weplansdk.domain.permissions.model.WeplanPermission;
-import com.cumberland.weplansdk.domain.permissions.model.WeplanPermissionAskListener;
-import com.cumberland.weplansdk.domain.permissions.usecase.WeplanPermissionChecker;
 import com.cumberland.weplansdk.init.WeplanSdkException;
 
 public class WelcomeActivity extends AppCompatActivity {
+
+  private static final int PERMISSION_REQUEST_CODE = 1987;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_welcome);
 
-    checkLocationPermission();
+    checkPermissions();
 
     findViewById(R.id.enableButton).setOnClickListener(new View.OnClickListener() {
       @Override
@@ -32,21 +30,19 @@ public class WelcomeActivity extends AppCompatActivity {
     });
   }
 
-  private void checkLocationPermission() {
-    WeplanPermissionChecker.INSTANCE.withActivity(this)
-        .withPermission(WeplanPermission.ACCESS_COARSE_LOCATION.INSTANCE)
-        .withListener(new PermissionListener())
-        .check();
+  private void checkPermissions() {
+    ActivityCompat.requestPermissions(this, new String[] {
+        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG
+    }, PERMISSION_REQUEST_CODE);
   }
 
   private void initSdk() {
     findViewById(R.id.loading).setVisibility(View.VISIBLE);
 
     WeplanSdk.INSTANCE.withContext(this)
-        .withClientId(
-            "YOUR_CLIENT_ID")
-        .withClientSecret(
-            "YOUR_CLIENT_SECRET")
+        .withClientId("YOUR_CLIENT_ID")
+        .withClientSecret("YOUR_CLIENT_SECRET")
         .listening(new WeplanSdkListener())
         .enable();
   }
@@ -63,7 +59,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-          checkLocationPermission();
+          checkPermissions();
         }
       }).show();
     }
@@ -71,38 +67,7 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     public void onSdkInit() {
       startActivity(new Intent(getApplicationContext(), MainActivity.class));
-      finish();    }
-  }
-
-  private class PermissionListener implements WeplanPermissionAskListener {
-
-    @Override
-    public void onNeedPermission(WeplanPermission weplanPermission) {
-      requestPermission(weplanPermission);
-    }
-
-    @Override
-    public void onPermissionPreviouslyDenied(WeplanPermission weplanPermission) {
-      requestPermission(weplanPermission);
-    }
-
-    @Override
-    public void onPermissionDisabled(WeplanPermission weplanPermission) {
-
-    }
-
-    @Override
-    public void onPermissionGranted(WeplanPermission weplanPermission) {
-
-    }
-
-    @Override
-    public void onPermissionNotOSCompatible(WeplanPermission weplanPermission) {
-
-    }
-
-    private void requestPermission(WeplanPermission weplanPermission) {
-      WeplanPermissionChecker.INSTANCE.requestPermission(WelcomeActivity.this, weplanPermission);
+      finish();
     }
   }
 }

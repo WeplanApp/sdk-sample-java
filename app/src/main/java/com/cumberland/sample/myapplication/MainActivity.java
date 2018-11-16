@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void checkPhonePermission() {
     WeplanPermissionChecker.INSTANCE.withActivity(this)
-        .withPermission(WeplanPermission.READ_PHONE_STATE.INSTANCE)
+        .withPermission(WeplanPermission.APPS_USAGE.INSTANCE)
         .withListener(new PermissionListener())
         .check();
   }
