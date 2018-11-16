@@ -18,12 +18,12 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    checkPhonePermission();
+    //checkAppUsagePermission();
     showUserId();
     initDisableButton();
   }
 
-  private void checkPhonePermission() {
+  private void checkAppUsagePermission() {
     WeplanPermissionChecker.INSTANCE.withActivity(this)
         .withPermission(WeplanPermission.APPS_USAGE.INSTANCE)
         .withListener(new PermissionListener())
