@@ -14,13 +14,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/well_done"/>
+        android:text="@string/inside_app"/>
 
     <TextView
         android:id="@+id/id_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="User Id: Waiting"/>
+        tools:text="User Id: Waiting"
+        android:visibility="gone"/>
   </LinearLayout>
 
   <Button
@@ -29,6 +30,7 @@
       android:layout_height="wrap_content"
       android:layout_margin="16dp"
       android:text="@string/disable"
-      android:layout_gravity="end|bottom"/>
+      android:layout_gravity="end|bottom"
+      android:visibility="gone"/>
 
 </FrameLayout>

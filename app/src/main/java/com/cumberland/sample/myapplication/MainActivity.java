@@ -3,6 +3,7 @@ package com.cumberland.sample.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.cumberland.weplansdk.WeplanSdk;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    Log.i("WeplanSDK", "Inside MainActivity");
     //checkAppUsagePermission();
     showUserId();
     initDisableButton();

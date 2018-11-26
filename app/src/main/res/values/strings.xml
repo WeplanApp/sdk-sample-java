@@ -2,5 +2,7 @@
   <string name="app_name">Weplan Sdk Sample Application</string>
   <string name="terms">Your terms and conditions</string>
   <string name="well_done">Well Done! Sdk is enabled</string>
+  <string name="inside_app">You are logged in</string>
   <string name="disable">disable SDK</string>
+  <string name="log_in_app">Log in</string>
 </resources>

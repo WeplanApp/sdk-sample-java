@@ -18,7 +18,7 @@
       android:visibility="gone"/>
 
   <Button
-      android:text="@string/accept"
+      android:text="@string/log_in_app"
       android:id="@+id/enableButton"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
