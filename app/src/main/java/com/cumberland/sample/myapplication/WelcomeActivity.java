@@ -32,8 +32,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
   private void checkPermissions() {
     ActivityCompat.requestPermissions(this, new String[] {
-        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.READ_PHONE_STATE
     }, PERMISSION_REQUEST_CODE);
   }
 
