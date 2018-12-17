@@ -2,7 +2,9 @@ package com.cumberland.sample.myapplication;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -47,19 +49,35 @@ public class WelcomeActivity extends AppCompatActivity {
         .enable();
   }
 
+
+  private void checkSdkError(WeplanSdkException ex) {
+    if(ex instanceof WeplanSdkException.PermissionNotAvailable)
+      ActivityCompat.requestPermissions(this, new String[] { ((WeplanSdkException.PermissionNotAvailable) ex).getWeplanPermission().getValue() }, PERMISSION_REQUEST_CODE);
+    else if(ex instanceof WeplanSdkException.BackgroundLimitError)
+      requestNotificationPermission();
+  }
+
+  private void requestNotificationPermission() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+      Intent intent = new Intent();
+      intent.setAction(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
+      startActivity(intent);
+    }
+  }
+
   private class WeplanSdkListener implements WeplanSdkCallback {
 
     @Override
-    public void onSdkError(WeplanSdkException e) {
+    public void onSdkError(final WeplanSdkException ex) {
       WeplanSdk.INSTANCE.disable(getApplicationContext());
       findViewById(R.id.loading).setVisibility(View.GONE);
 
-      Snackbar.make(findViewById(android.R.id.content), "Error: " + e.getMessage(),
+      Snackbar.make(findViewById(android.R.id.content), "Error: " + ex.getMessage(),
           Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
-          checkPermissions();
+          checkSdkError(ex);
         }
       }).show();
     }
@@ -69,5 +87,6 @@ public class WelcomeActivity extends AppCompatActivity {
       startActivity(new Intent(getApplicationContext(), MainActivity.class));
       finish();
     }
+
   }
 }
