@@ -34,6 +34,6 @@ dependencies {
 
   implementation 'com.android.support:appcompat-v7:27.1.1'
   implementation 'com.android.support:design:27.1.1'
-  implementation 'com.cumberland.weplansdk:weplansdk:1.2.9.1'
+  implementation 'com.cumberland.weplansdk:weplansdk:1.2.9.6'
   implementation 'com.android.support:multidex:1.0.3'
 }
